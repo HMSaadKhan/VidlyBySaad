@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using VidlyBySaad.Models;
+using VidlyBySaad.ViewModels;
 
 namespace VidlyBySaad.Controllers
 {
@@ -13,19 +11,20 @@ namespace VidlyBySaad.Controllers
         public ActionResult Random()
         {
             var movie = new Movies() { Name = "Shrek" };
-            return View(movie);
+            var customers = new List<Customer>
+                { new Customer{ Name ="Customer1"},
+                new Customer{ Name ="Customer2"} };
+            var viewModel = new RandomMovieViewModel {
+                Movie = movie,
+                Customers = customers
+            };
+            return View(viewModel);
         }
 
         public ActionResult Edit(int id)
         {
             return Content("id=" + id);
         }
-        public ActionResult Index(int? pageIndex, string sortBy)
-        {
-           if(!pageIndex.HasValue)
-            { pageIndex = 1; }
-            if (string.IsNullOrEmpty(sortBy)) { sortBy = "name"; }
-            return Content(string.Format("pageIndex = "+pageIndex+" sort by="+sortBy));
-        }
+       
     }
 }
